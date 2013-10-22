@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+    <appender name="STDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!-- properties to be read from classpath -->
+    <property resource="application.properties" />
+
+    <!-- properties to be read from file -->
+    <!-- <property file="${config.folder}/resources/application.properties"/> -->
+
+    <appender name="MONGO" class="twr.explore.logback.MongoDBMetricsAppender">
+        <uri>${metrics.mongodb.uri}</uri>
+    </appender>
+
+    <logger name="MONGO" additivity="false">
+        <appender-ref ref="MONGO"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
